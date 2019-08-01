@@ -1,4 +1,5 @@
-﻿using MimeKit;
+﻿using MailKit;
+using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,7 @@ namespace SaintSender
         MessageLoader messageLoader;
         String email;
         String pass;
+        List<String> folders = new List<string>();
 
         public MessageWindow(String email, String pass)
         {
@@ -33,15 +35,15 @@ namespace SaintSender
            // progressBar1.Value = 0;
             var progress = new Progress<MimeMessage>(email => GetEmailDetails(email));
             await Task.Factory.StartNew(() => messageLoader.GetAllMails(progress), TaskCreationOptions.LongRunning);
-
+            folderDropDown.DataSource = messageLoader.getFolders();
         }
 
         private void GetEmailDetails(MimeMessage email)
         {
-            progressBar1.Maximum = messageLoader.emailCount;
+            loadProgressBar.Maximum = messageLoader.emailCount;
             string[] row = new string[] { email.From.ToString(), email.Subject, email.Date.ToString() };
             emailList.Items.Add(new ListViewItem(row));
-            progressBar1.Increment(1);
+            loadProgressBar.Increment(1);
         }
 
         private void OnFormClose(object sender, FormClosingEventArgs e)
@@ -49,6 +51,10 @@ namespace SaintSender
             Application.Exit();
         }
 
+        private void onEmailSelected(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            var c = sender.ToString();
+        }
 
     }
 }
