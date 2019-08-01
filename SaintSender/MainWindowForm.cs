@@ -28,6 +28,7 @@ namespace SaintSender
             string password = passwordBox.Text;
             MessageWindow mw = new MessageWindow(email, password);
             mw.Show();
+            this.Hide();
             //this.Close();
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MailKit;
 using MailKit.Net.Imap;
 using MailKit.Search;
@@ -12,9 +13,11 @@ namespace SaintSender
 {
     class MessageLoader
     {
+        Timer t;
         private readonly string mailServer, login, password;
         private readonly int port;
         private readonly bool ssl;
+        public int emailCount { get; set; }
 
         public MessageLoader(string mailServer, int port, bool ssl, string login, string password)
         {
@@ -39,12 +42,12 @@ namespace SaintSender
                 var inbox = client.Inbox;
                 inbox.Open(FolderAccess.ReadOnly);
                 var results = inbox.Search(SearchOptions.All, SearchQuery.Not(SearchQuery.Seen));
+
                 foreach (var uniqueId in results.UniqueIds)
                 {
                     var message = inbox.GetMessage(uniqueId);
 
                     messages.Add(message.HtmlBody);
-
                     //Mark message as read
                     inbox.AddFlags(uniqueId, MessageFlags.Seen, true);
                 }
@@ -70,6 +73,7 @@ namespace SaintSender
                 var inbox = client.Inbox;
                 inbox.Open(FolderAccess.ReadOnly);
                 var results = inbox.Search(SearchOptions.All, SearchQuery.DeliveredAfter(new DateTime(2019, 07, 30)));
+                emailCount = results.UniqueIds.Count;
                 foreach (var uniqueId in results.UniqueIds)
                 {
                     var message = inbox.GetMessage(uniqueId);
@@ -85,5 +89,6 @@ namespace SaintSender
 
             //return messages;
         }
+
     }
 }

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("");
             this.emailList = new System.Windows.Forms.ListView();
             this.Sender = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Subject = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -43,7 +43,7 @@
             this.Subject,
             this.Time});
             this.emailList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem4});
             this.emailList.Location = new System.Drawing.Point(50, 89);
             this.emailList.Name = "emailList";
             this.emailList.Size = new System.Drawing.Size(903, 252);
@@ -82,6 +82,7 @@
             this.Controls.Add(this.emailList);
             this.Name = "MessageWindow";
             this.Text = "MessageWindow";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClose);
             this.Load += new System.EventHandler(this.MessageWindow_Load);
             this.ResumeLayout(false);
 

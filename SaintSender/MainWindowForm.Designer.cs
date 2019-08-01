@@ -31,8 +31,9 @@
             this.emailBox = new MetroFramework.Controls.MetroTextBox();
             this.passwordBox = new MetroFramework.Controls.MetroTextBox();
             this.metroButton1 = new MetroFramework.Controls.MetroButton();
-            this.titleLabel = new MetroFramework.Controls.MetroLabel();
             this.titleLogLabel = new System.Windows.Forms.Label();
+            this.iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // emailBox
@@ -41,21 +42,20 @@
             // 
             // 
             this.emailBox.CustomButton.Image = null;
-            this.emailBox.CustomButton.Location = new System.Drawing.Point(328, 2);
+            this.emailBox.CustomButton.Location = new System.Drawing.Point(225, 1);
             this.emailBox.CustomButton.Margin = new System.Windows.Forms.Padding(4);
             this.emailBox.CustomButton.Name = "";
-            this.emailBox.CustomButton.Size = new System.Drawing.Size(35, 35);
+            this.emailBox.CustomButton.Size = new System.Drawing.Size(23, 23);
             this.emailBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.emailBox.CustomButton.TabIndex = 1;
             this.emailBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.emailBox.CustomButton.UseSelectable = true;
             this.emailBox.CustomButton.Visible = false;
-            this.emailBox.FontSize = MetroFramework.MetroTextBoxSize.Tall;
+            this.emailBox.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.emailBox.ForeColor = System.Drawing.Color.Silver;
             this.emailBox.Lines = new string[] {
         "Email"};
-            this.emailBox.Location = new System.Drawing.Point(87, 186);
-            this.emailBox.Margin = new System.Windows.Forms.Padding(4);
+            this.emailBox.Location = new System.Drawing.Point(62, 135);
             this.emailBox.MaxLength = 32767;
             this.emailBox.Name = "emailBox";
             this.emailBox.PasswordChar = '\0';
@@ -64,7 +64,7 @@
             this.emailBox.SelectionLength = 0;
             this.emailBox.SelectionStart = 0;
             this.emailBox.ShortcutsEnabled = true;
-            this.emailBox.Size = new System.Drawing.Size(366, 40);
+            this.emailBox.Size = new System.Drawing.Size(249, 25);
             this.emailBox.TabIndex = 0;
             this.emailBox.Text = "Email";
             this.emailBox.UseSelectable = true;
@@ -78,10 +78,10 @@
             // 
             // 
             this.passwordBox.CustomButton.Image = null;
-            this.passwordBox.CustomButton.Location = new System.Drawing.Point(330, 2);
+            this.passwordBox.CustomButton.Location = new System.Drawing.Point(225, 1);
             this.passwordBox.CustomButton.Margin = new System.Windows.Forms.Padding(4);
             this.passwordBox.CustomButton.Name = "";
-            this.passwordBox.CustomButton.Size = new System.Drawing.Size(33, 33);
+            this.passwordBox.CustomButton.Size = new System.Drawing.Size(23, 23);
             this.passwordBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.passwordBox.CustomButton.TabIndex = 1;
             this.passwordBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
@@ -91,8 +91,7 @@
             this.passwordBox.ForeColor = System.Drawing.Color.Silver;
             this.passwordBox.Lines = new string[] {
         "Password"};
-            this.passwordBox.Location = new System.Drawing.Point(87, 245);
-            this.passwordBox.Margin = new System.Windows.Forms.Padding(4);
+            this.passwordBox.Location = new System.Drawing.Point(62, 183);
             this.passwordBox.MaxLength = 32767;
             this.passwordBox.Name = "passwordBox";
             this.passwordBox.PasswordChar = '●';
@@ -101,7 +100,7 @@
             this.passwordBox.SelectionLength = 0;
             this.passwordBox.SelectionStart = 0;
             this.passwordBox.ShortcutsEnabled = true;
-            this.passwordBox.Size = new System.Drawing.Size(366, 38);
+            this.passwordBox.Size = new System.Drawing.Size(249, 25);
             this.passwordBox.TabIndex = 1;
             this.passwordBox.Text = "Password";
             this.passwordBox.UseSelectable = true;
@@ -112,58 +111,61 @@
             // metroButton1
             // 
             this.metroButton1.BackColor = System.Drawing.Color.White;
-            this.metroButton1.ForeColor = System.Drawing.Color.SteelBlue;
-            this.metroButton1.Location = new System.Drawing.Point(165, 312);
-            this.metroButton1.Margin = new System.Windows.Forms.Padding(4);
+            this.metroButton1.FontSize = MetroFramework.MetroButtonSize.Tall;
+            this.metroButton1.ForeColor = System.Drawing.Color.SkyBlue;
+            this.metroButton1.Location = new System.Drawing.Point(117, 233);
             this.metroButton1.Name = "metroButton1";
-            this.metroButton1.Size = new System.Drawing.Size(195, 46);
+            this.metroButton1.Size = new System.Drawing.Size(130, 36);
             this.metroButton1.TabIndex = 4;
-            this.metroButton1.Text = "metroButton1";
+            this.metroButton1.Text = "Sign in";
             this.metroButton1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroButton1.UseCustomBackColor = true;
             this.metroButton1.UseCustomForeColor = true;
             this.metroButton1.UseSelectable = true;
             this.metroButton1.Click += new System.EventHandler(this.MetroButton1_Click);
             // 
-            // titleLabel
-            // 
-            this.titleLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.titleLabel.Location = new System.Drawing.Point(236, 115);
-            this.titleLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(184, 46);
-            this.titleLabel.TabIndex = 5;
-            this.titleLabel.Text = "Log in";
-            // 
             // titleLogLabel
             // 
             this.titleLogLabel.AutoSize = true;
-            this.titleLogLabel.Font = new System.Drawing.Font("Segoe MDL2 Assets", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titleLogLabel.Font = new System.Drawing.Font("Segoe UI Light", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titleLogLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.titleLogLabel.Location = new System.Drawing.Point(231, 84);
-            this.titleLogLabel.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.titleLogLabel.Location = new System.Drawing.Point(156, 76);
+            this.titleLogLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 2);
+            this.titleLogLabel.MinimumSize = new System.Drawing.Size(0, 28);
             this.titleLogLabel.Name = "titleLogLabel";
-            this.titleLogLabel.Size = new System.Drawing.Size(73, 28);
+            this.titleLogLabel.Size = new System.Drawing.Size(91, 38);
             this.titleLogLabel.TabIndex = 6;
             this.titleLogLabel.Text = "Log in";
             // 
+            // iconPictureBox1
+            // 
+            this.iconPictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.iconPictureBox1.ForeColor = System.Drawing.Color.Gray;
+            this.iconPictureBox1.IconChar = FontAwesome.Sharp.IconChar.User;
+            this.iconPictureBox1.IconColor = System.Drawing.Color.Gray;
+            this.iconPictureBox1.IconSize = 30;
+            this.iconPictureBox1.Location = new System.Drawing.Point(121, 84);
+            this.iconPictureBox1.Name = "iconPictureBox1";
+            this.iconPictureBox1.Size = new System.Drawing.Size(30, 30);
+            this.iconPictureBox1.TabIndex = 7;
+            this.iconPictureBox1.TabStop = false;
+            // 
             // SaintSender
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(534, 455);
+            this.ClientSize = new System.Drawing.Size(373, 314);
+            this.Controls.Add(this.iconPictureBox1);
             this.Controls.Add(this.titleLogLabel);
-            this.Controls.Add(this.titleLabel);
             this.Controls.Add(this.metroButton1);
             this.Controls.Add(this.passwordBox);
             this.Controls.Add(this.emailBox);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.ForeColor = System.Drawing.Color.Navy;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "SaintSender";
-            this.Padding = new System.Windows.Forms.Padding(25, 75, 25, 25);
             this.Text = "Saint Sender";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -174,8 +176,8 @@
         private MetroFramework.Controls.MetroTextBox emailBox;
         private MetroFramework.Controls.MetroTextBox passwordBox;
         private MetroFramework.Controls.MetroButton metroButton1;
-        private MetroFramework.Controls.MetroLabel titleLabel;
         private System.Windows.Forms.Label titleLogLabel;
+        private FontAwesome.Sharp.IconPictureBox iconPictureBox1;
     }
 }
 
