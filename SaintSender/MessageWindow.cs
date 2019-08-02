@@ -19,6 +19,8 @@ namespace SaintSender
         String email;
         String pass;
         List<String> folders = new List<string>();
+        string selectedFolder = "INBOX";
+        int count = 0;
 
         public MessageWindow(String email, String pass)
         {
@@ -27,22 +29,32 @@ namespace SaintSender
             this.pass = pass;
         }
 
-        private async void MessageWindow_Load(object sender, EventArgs e)
+        private void MessageWindow_Load(object sender, EventArgs e)
+        {
+            LoadMessages();
+        }
+
+        private async void LoadMessages()
         {
             messageLoader = new MessageLoader("imap.gmail.com", 993, true, email, pass);
             messageLoader.emailCount = 100;
-           // var allEmails = messageLoader.GetAllMails();
-           // progressBar1.Value = 0;
+            // var allEmails = messageLoader.GetAllMails();
+            // progressBar1.Value = 0;
             var progress = new Progress<MimeMessage>(email => GetEmailDetails(email));
+            List<string> folderList = messageLoader.getFolders();
+            folderList.Insert(0, "");
+            folderDropDown.DataSource = folderList;
             await Task.Factory.StartNew(() => messageLoader.GetAllMails(progress), TaskCreationOptions.LongRunning);
-            folderDropDown.DataSource = messageLoader.getFolders();
         }
 
         private void GetEmailDetails(MimeMessage email)
         {
             loadProgressBar.Maximum = messageLoader.emailCount;
             string[] row = new string[] { email.From.ToString(), email.Subject, email.Date.ToString() };
-            emailList.Items.Add(new ListViewItem(row));
+            ListViewItem rowItem = new ListViewItem(row);
+            rowItem.Tag = email.MessageId;
+            Console.WriteLine(": " + rowItem.Tag.ToString());
+            emailList.Items.Add(rowItem);
             loadProgressBar.Increment(1);
         }
 
@@ -53,8 +65,52 @@ namespace SaintSender
 
         private void onEmailSelected(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            var c = sender.ToString();
+            try
+            {
+               // MessageBox.Show(emailList.SelectedItems[0].ToString());
+               emailContentBox.DocumentText = messageLoader.getEmailById(emailList.SelectedItems[0].Tag.ToString(), selectedFolder).HtmlBody;
+            }
+            catch
+            {
+
+            }
+
         }
 
+        private async void onSelected(object sender, EventArgs e)
+        {
+            if (count != 0)
+            {
+                onSelectedIndexChanged();
+            }
+
+            count++;
+        }
+
+        private async void MessageWindowReLoad(object sender, EventArgs e)
+        {
+            messageLoader = new MessageLoader("imap.gmail.com", 993, true, email, pass);
+            messageLoader.emailCount = 100;
+            // var allEmails = messageLoader.GetAllMails();
+            // progressBar1.Value = 0;
+            var progress = new Progress<MimeMessage>(email => GetEmailDetails(email));
+            await Task.Factory.StartNew(() => messageLoader.GetAllMails(progress), TaskCreationOptions.LongRunning);
+        }
+
+        private async void onSelectedIndexChanged()
+        {
+            loadProgressBar.Value = 0;
+            emailList.Items.Clear();
+            char[] charsToTrim = { '(', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ' ', ')' };
+            selectedFolder = folderDropDown.SelectedItem.ToString().Trim(charsToTrim);
+
+            var progress = new Progress<MimeMessage>(email => GetEmailDetails(email));
+            await Task.Factory.StartNew(() => messageLoader.GetAllMailsByFolder(progress, selectedFolder), TaskCreationOptions.LongRunning);
+        }
+
+        private void RefreshIcon_Click(object sender, EventArgs e)
+        {
+            onSelectedIndexChanged();
+        }
     }
 }

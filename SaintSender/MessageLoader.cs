@@ -77,16 +77,22 @@ namespace SaintSender
 
                     var inbox = client.Inbox;
                     inbox.Open(FolderAccess.ReadOnly);
-                    var results = inbox.Search(SearchOptions.All, SearchQuery.DeliveredAfter(new DateTime(2019, 07, 30)));
-                    emailCount = results.UniqueIds.Count;
-                    foreach (var uniqueId in results.UniqueIds)
+                    var results = inbox.Search(SearchOptions.All, SearchQuery.DeliveredAfter(new DateTime(2019, 08, 01)));
+                    int emailCounter = results.UniqueIds.Count;
+                    if (emailCounter > 50)
                     {
-                        var message = inbox.GetMessage(uniqueId);
+                        emailCount = 50;
+                    }
+                    else
+                    {
+                        emailCount = results.UniqueIds.Count;
+                    }
+
+                    for (int i = emailCounter - 1; i >= emailCounter - emailCount; i--)
+                    {
+                        var message = inbox.GetMessage(results.UniqueIds[i]);
                         progress.Report(message);
                         messages.Add(message);
-
-                        //Mark message as read
-                        //inbox.AddFlags(uniqueId, MessageFlags.Seen, true);
                     }
 
                     client.Disconnect(true);
@@ -144,6 +150,93 @@ namespace SaintSender
                 return folders;
             }
 
+        }
+
+        public MimeMessage getEmailById(String id, String selectedFolder)
+        {
+            using (var client = new ImapClient())
+            {
+                try
+                {
+                    client.Connect(mailServer, port, ssl);
+                    client.AuthenticationMechanisms.Remove("XOAUTH2");
+                    client.Authenticate(login, password);
+                    var mainEmailFolder = client.GetFolder(client.PersonalNamespaces[0]);
+                    emailFolders = mainEmailFolder.GetSubfolders().ToList();
+                    foreach (var folder in emailFolders)
+                    {
+                        if (folder.FullName == selectedFolder)
+                        {
+                            folder.Open(FolderAccess.ReadOnly);
+                            var results = folder.Search(SearchQuery.HeaderContains("Message-ID", id));
+                            foreach (var result in results)
+                            {
+                                MimeMessage message = folder.GetMessage(result); ;
+                                if (message.MessageId == id)
+                                {
+                                    return message;
+                                }
+                            }
+                            folder.Close();
+                        }
+                    }
+                    client.Disconnect(true);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    MessageBox.Show("Wrong username or password.");
+                }
+            }
+            return null;
+        }
+
+        public void GetAllMailsByFolder(IProgress<MimeMessage> progress, String selectedFolder)
+        {
+            var messages = new List<MimeMessage>();
+
+            using (var client = new ImapClient())
+            {
+                try
+                {
+                    client.Connect(mailServer, port, ssl);
+                    client.AuthenticationMechanisms.Remove("XOAUTH2");
+                    client.Authenticate(login, password);
+
+                    var mainEmailFolder = client.GetFolder(client.PersonalNamespaces[0]);
+                    emailFolders = mainEmailFolder.GetSubfolders().ToList();
+                    IMailFolder inbox = null;
+                  
+                    foreach (var folder in emailFolders)
+                    {
+                        if (folder.FullName == selectedFolder)
+                        {
+                            inbox = folder;
+                        }
+                    }
+                    inbox.Open(FolderAccess.ReadOnly);
+                    var results = inbox.Search(SearchOptions.All, SearchQuery.All);
+                    int emailCounter = results.UniqueIds.Count;
+                    if (emailCounter > 50) {
+                        emailCount = 50;
+                    } else
+                    {
+                        emailCount = results.UniqueIds.Count;
+                    }
+
+                    for (int i = emailCounter - 1; i >= emailCounter - emailCount; i--)
+                    {
+                        var message = inbox.GetMessage(results.UniqueIds[i]);
+                        progress.Report(message);
+                        messages.Add(message);
+                    }
+
+                    client.Disconnect(true);
+                }
+                catch (AuthenticationException)
+                {
+                    MessageBox.Show("Wrong username or password.");
+                }
+            }
         }
     }
 }

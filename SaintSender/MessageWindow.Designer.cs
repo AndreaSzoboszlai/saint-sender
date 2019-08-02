@@ -28,15 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
             this.emailList = new System.Windows.Forms.ListView();
             this.Sender = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Subject = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.loadProgressBar = new MetroFramework.Controls.MetroProgressBar();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.titleFolderLabel = new System.Windows.Forms.Label();
             this.folderDropDown = new MetroFramework.Controls.MetroComboBox();
+            this.emailContentBox = new System.Windows.Forms.WebBrowser();
+            this.refreshIcon = new FontAwesome.Sharp.IconPictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.refreshIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // emailList
@@ -47,13 +48,10 @@
             this.Time});
             this.emailList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.emailList.FullRowSelect = true;
-            listViewItem1.StateImageIndex = 0;
-            this.emailList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
             this.emailList.Location = new System.Drawing.Point(47, 124);
             this.emailList.MultiSelect = false;
             this.emailList.Name = "emailList";
-            this.emailList.Size = new System.Drawing.Size(975, 252);
+            this.emailList.Size = new System.Drawing.Size(990, 252);
             this.emailList.TabIndex = 0;
             this.emailList.UseCompatibleStateImageBehavior = false;
             this.emailList.View = System.Windows.Forms.View.Details;
@@ -80,17 +78,9 @@
             this.loadProgressBar.HideProgressText = false;
             this.loadProgressBar.Location = new System.Drawing.Point(47, 391);
             this.loadProgressBar.Name = "loadProgressBar";
-            this.loadProgressBar.Size = new System.Drawing.Size(975, 26);
+            this.loadProgressBar.Size = new System.Drawing.Size(990, 26);
             this.loadProgressBar.TabIndex = 2;
             this.loadProgressBar.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(47, 448);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(975, 165);
-            this.textBox1.TabIndex = 3;
             // 
             // titleFolderLabel
             // 
@@ -108,29 +98,55 @@
             // folderDropDown
             // 
             this.folderDropDown.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.folderDropDown.FontSize = MetroFramework.MetroComboBoxSize.Small;
             this.folderDropDown.FormattingEnabled = true;
             this.folderDropDown.IntegralHeight = false;
-            this.folderDropDown.ItemHeight = 24;
-            this.folderDropDown.Location = new System.Drawing.Point(202, 78);
+            this.folderDropDown.ItemHeight = 21;
+            this.folderDropDown.Location = new System.Drawing.Point(229, 78);
             this.folderDropDown.Name = "folderDropDown";
-            this.folderDropDown.Size = new System.Drawing.Size(820, 30);
+            this.folderDropDown.Size = new System.Drawing.Size(761, 27);
             this.folderDropDown.TabIndex = 8;
             this.folderDropDown.UseSelectable = true;
+            this.folderDropDown.SelectedIndexChanged += new System.EventHandler(this.onSelected);
+            // 
+            // emailContentBox
+            // 
+            this.emailContentBox.Location = new System.Drawing.Point(47, 439);
+            this.emailContentBox.MinimumSize = new System.Drawing.Size(20, 20);
+            this.emailContentBox.Name = "emailContentBox";
+            this.emailContentBox.Size = new System.Drawing.Size(990, 284);
+            this.emailContentBox.TabIndex = 9;
+            // 
+            // refreshIcon
+            // 
+            this.refreshIcon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.refreshIcon.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.refreshIcon.IconChar = FontAwesome.Sharp.IconChar.Redo;
+            this.refreshIcon.IconColor = System.Drawing.SystemColors.ControlText;
+            this.refreshIcon.IconSize = 30;
+            this.refreshIcon.Location = new System.Drawing.Point(1007, 88);
+            this.refreshIcon.Name = "refreshIcon";
+            this.refreshIcon.Size = new System.Drawing.Size(30, 30);
+            this.refreshIcon.TabIndex = 10;
+            this.refreshIcon.TabStop = false;
+            this.refreshIcon.Click += new System.EventHandler(this.RefreshIcon_Click);
             // 
             // MessageWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1076, 659);
+            this.ClientSize = new System.Drawing.Size(1092, 759);
+            this.Controls.Add(this.refreshIcon);
+            this.Controls.Add(this.emailContentBox);
             this.Controls.Add(this.folderDropDown);
             this.Controls.Add(this.titleFolderLabel);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.loadProgressBar);
             this.Controls.Add(this.emailList);
             this.Name = "MessageWindow";
             this.Text = "MessageWindow";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClose);
             this.Load += new System.EventHandler(this.MessageWindow_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.refreshIcon)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -143,8 +159,9 @@
         private System.Windows.Forms.ColumnHeader Subject;
         private System.Windows.Forms.ColumnHeader Time;
         private MetroFramework.Controls.MetroProgressBar loadProgressBar;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label titleFolderLabel;
         private MetroFramework.Controls.MetroComboBox folderDropDown;
+        private System.Windows.Forms.WebBrowser emailContentBox;
+        private FontAwesome.Sharp.IconPictureBox refreshIcon;
     }
 }
