@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MailKit;
 using MailKit.Net.Imap;
+using MailKit.Net.Smtp;
 using MailKit.Search;
 using MailKit.Security;
 using MimeKit;
@@ -28,6 +29,14 @@ namespace SaintSender
             this.ssl = ssl;
             this.login = login;
             this.password = password;
+            MessageBox.Show(login);
+        }
+
+        public MessageLoader(string email, string pass)
+        {
+            this.login = email;
+            this.password = pass;
+            MessageBox.Show(login);
         }
 
         public IEnumerable<string> GetUnreadMails()
@@ -236,6 +245,33 @@ namespace SaintSender
                 {
                     MessageBox.Show("Wrong username or password.");
                 }
+            }
+        }
+
+        public void sendMessage(string from, string to, string subject, string messageBody)
+        {
+            MessageBox.Show(from);
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress(from));
+            message.To.Add(new MailboxAddress(to));
+            message.Subject = subject;
+
+            message.Body = new TextPart("plain")
+            {
+                Text = messageBody
+            };
+
+            using (var client = new SmtpClient())
+            {
+                client.Connect("smtp.gmail.com", 587);
+
+                client.AuthenticationMechanisms.Remove("XOAUTH2");
+
+                // Note: only needed if the SMTP server requires authentication
+                client.Authenticate(login, password);
+
+                client.Send(message);
+                client.Disconnect(true);
             }
         }
     }

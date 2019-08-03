@@ -37,6 +37,7 @@
             this.folderDropDown = new MetroFramework.Controls.MetroComboBox();
             this.emailContentBox = new System.Windows.Forms.WebBrowser();
             this.refreshIcon = new FontAwesome.Sharp.IconPictureBox();
+            this.newMailButton = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.refreshIcon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -102,9 +103,9 @@
             this.folderDropDown.FormattingEnabled = true;
             this.folderDropDown.IntegralHeight = false;
             this.folderDropDown.ItemHeight = 21;
-            this.folderDropDown.Location = new System.Drawing.Point(229, 78);
+            this.folderDropDown.Location = new System.Drawing.Point(225, 78);
             this.folderDropDown.Name = "folderDropDown";
-            this.folderDropDown.Size = new System.Drawing.Size(761, 27);
+            this.folderDropDown.Size = new System.Drawing.Size(612, 27);
             this.folderDropDown.TabIndex = 8;
             this.folderDropDown.UseSelectable = true;
             this.folderDropDown.SelectedIndexChanged += new System.EventHandler(this.onSelected);
@@ -131,11 +132,28 @@
             this.refreshIcon.TabStop = false;
             this.refreshIcon.Click += new System.EventHandler(this.RefreshIcon_Click);
             // 
+            // newMailButton
+            // 
+            this.newMailButton.BackColor = System.Drawing.Color.White;
+            this.newMailButton.FontSize = MetroFramework.MetroButtonSize.Medium;
+            this.newMailButton.ForeColor = System.Drawing.Color.SkyBlue;
+            this.newMailButton.Location = new System.Drawing.Point(857, 78);
+            this.newMailButton.Name = "newMailButton";
+            this.newMailButton.Size = new System.Drawing.Size(130, 29);
+            this.newMailButton.TabIndex = 11;
+            this.newMailButton.Text = "Send Email";
+            this.newMailButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.newMailButton.UseCustomBackColor = true;
+            this.newMailButton.UseCustomForeColor = true;
+            this.newMailButton.UseSelectable = true;
+            this.newMailButton.Click += new System.EventHandler(this.NewMailButton_Click);
+            // 
             // MessageWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1092, 759);
+            this.Controls.Add(this.newMailButton);
             this.Controls.Add(this.refreshIcon);
             this.Controls.Add(this.emailContentBox);
             this.Controls.Add(this.folderDropDown);
@@ -163,5 +181,6 @@
         private MetroFramework.Controls.MetroComboBox folderDropDown;
         private System.Windows.Forms.WebBrowser emailContentBox;
         private FontAwesome.Sharp.IconPictureBox refreshIcon;
+        private MetroFramework.Controls.MetroButton newMailButton;
     }
 }

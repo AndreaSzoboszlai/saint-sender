@@ -31,6 +31,7 @@ namespace SaintSender
 
         private void MessageWindow_Load(object sender, EventArgs e)
         {
+            messageLoader = new MessageLoader("imap.gmail.com", 993, true, email, pass);
             LoadMessages();
         }
 
@@ -111,6 +112,12 @@ namespace SaintSender
         private void RefreshIcon_Click(object sender, EventArgs e)
         {
             onSelectedIndexChanged();
+        }
+
+        private void NewMailButton_Click(object sender, EventArgs e)
+        {
+            SendEmailForm sendEmailForm = new SendEmailForm(email, pass);
+            sendEmailForm.Show();
         }
     }
 }
